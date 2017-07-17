@@ -38,19 +38,17 @@ switch (action) {
 // make a 'my-tweets' command that shows the last 20 tweets
 function twitter (){
   var tweetTimeline = { screen_name: 'Confess_booth', count: 13 };
-  client.get('statuses/usertimline', tweetTimeline, function(error, tweets, response) {
+  client.get('statuses/user_timeline', tweetTimeline, function(error, tweets, response) {
       if(error){
         console.log('tweets not loading')
       }
       console.log("==============================================")
       console.log("Some Phyllis Dyller Quotes")
+      // console.log(JSON.stringify(tweets, null, 2));
       for (var i = 0; i < tweets.length; i++) {
         console.log("_____________________________________________");
-        console.log("Tweeted on: " + tweets[i].created_at);
         console.log(tweets[i].text);
-        console.log(response);
-      }
-       
+      }    
   });
 }
 
