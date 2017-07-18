@@ -77,9 +77,11 @@ function spotifySong(){
       }else{
           var data =  data.tracks.items;
     for (var i = 0; i < data.length; i++) {
-        console.log(data[i].album.name);
-        console.log(data[i].artist);
-        console.log(data[i].name);
+        console.log("the album is: " + data[i].album.name);
+        console.log("the title of the track is: " + data[i].name);
+        for (var h =0; h < data[i].artists.length; h++) {
+          console.log("the artist is: " + data[i].artists[h].name);     
+        }
         
     }
       }
