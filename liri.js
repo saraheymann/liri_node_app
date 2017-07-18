@@ -67,27 +67,53 @@ function twitter (){
 //  make a 'spotify-this-song' command that shows the artist, song name, a preview link to a song from Spotify
 // and the album that the song is from.  If no song is provided it will play 'I saw the sign'
 function spotifySong(){
-    spotify.search({ 
-      type: 'track', 
-      query: userInput,
-    limit: 1}, 
-      function(err, data) {
-      if (err) {
-        return console.log('Error occurred: ' + err);
-      }else{
-          var data =  data.tracks.items;
-    for (var i = 0; i < data.length; i++) {
-        console.log("the album is: " + data[i].album.name);
-        console.log("the title of the track is: " + data[i].name);
-        for (var h =0; h < data[i].artists.length; h++) {
-          console.log("the artist is: " + data[i].artists[h].name);     
-        }
-        
+    if(userInput === true){
+        spotify.search({ 
+            type: 'track', 
+            query: userInput,
+            limit: 1}, 
+            function(err, data) {
+                if (err) {
+                    return console.log('Error occurred: ' + err);
+                }else{
+                    var data =  data.tracks.items;
+                for (var i = 0; i < data.length; i++) {
+                    for (var h =0; h < data[i].artists.length; h++) {
+                    console.log("the artist is: " + data[i].artists[h].name);     
+                    }
+                    console.log("the album is: " + data[i].album.name);
+                    console.log("the title of the track is: " + data[i].name);
+                    console.log("a preview link for the song:" + data[i].preview_url);
+                    
+                }
+            }
+            
+            
+        });
+    }else{
+       spotify.search({ 
+            type: 'track', 
+            query: 'the sign ace of base',
+            limit: 1}, 
+            function(err, data) {
+                if (err) {
+                    return console.log('Error occurred: ' + err);
+                }else{
+                    var data =  data.tracks.items;
+                for (var i = 0; i < data.length; i++) {
+                    for (var h =0; h < data[i].artists.length; h++) {
+                    console.log("the artist is: " + data[i].artists[h].name);     
+                    }
+                    console.log("the album is: " + data[i].album.name);
+                    console.log("the title of the track is: " + data[i].name);
+                    console.log("a preview link for the song:" + data[i].preview_url);
+                    
+                }
+            }
+            
+            
+        }); 
     }
-      }
-      
-    // console.log(JSON.stringify(data.tracks.items, null, 2));
-    });
 }
 
 //  make a movie-this command that outputs the title, year, rating, rotton tomatoes
