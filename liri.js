@@ -120,10 +120,21 @@ function spotifySong(){
 // country, language, plot, and actors. If the user doesn't type in a movie it will
 // return 'mr. nobody'
 function omdb(){
-  request('http://www.omdbapi.com/?apikey=40e9cece&', function (error, response, body) {
+  request("http://www.omdbapi.com/?t=" + userInput + "&type=movie&apikey=40e9cece&", 
+            function (error, response, body) {
     console.log('error:', error); // Print the error if one occurred 
     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-    console.log('body:', body); // Print the HTML for the Google homepage. 
+    if(!error){
+    console.log('Title:', JSON.parse(body).Title); // Print the HTML for the Google homepage.
+    console.log('Year:', JSON.parse(body).Year);
+    console.log('Rating:', JSON.parse(body).imdbRating);
+    console.log('Rotton Tomatoes Score:', JSON.parse(body).Ratings[1].Value);
+    console.log('Country:', JSON.parse(body).Country);
+    console.log('Language:', JSON.parse(body).Language);
+    console.log('Plot:', JSON.parse(body).Plot);
+    console.log('Actors:', JSON.parse(body).Actors);
+    // console.log('Title:', JSON.parse(body));
+} 
   });
 }
 // command do-what-it-says: using the fs package, liri reads the text inside the random.txt
