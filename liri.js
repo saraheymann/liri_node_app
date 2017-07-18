@@ -2,12 +2,25 @@ var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
 var fs = require('fs');
 var request = require('request');
+// variable for the liri command
 var action = process.argv[2];
 // grabbing the data from keys.js
 var twitterKeysVar = require('./keys.js');
 var client = new Twitter(twitterKeysVar.twitterKeys);
+// user input variable
+var userInput = "";
+var nodeArgs = process.argv;
+// for loop to read the userInput beyond proccess.argv[3]
+for (var i = 3; i < nodeArgs.length; i++) {
 
-// var nodeArgs = process.argv;
+    if (i >= 3 && i < nodeArgs.length) {
+        userInput = userInput + " " + nodeArgs[i];
+
+    } else {
+        userInput = userInput + userInput[i];
+    }
+}
+
 
 // spotify keys
 var spotify = new Spotify({
@@ -37,33 +50,41 @@ switch (action) {
 
 // make a 'my-tweets' command that shows the last 20 tweets
 function twitter (){
-  var tweetTimeline = { screen_name: 'Confess_booth', count: 13 };
-  client.get('statuses/user_timeline', tweetTimeline, function(error, tweets, response) {
-      if(error){
-        console.log('tweets not loading')
+  var tweetTimeLine = { screen_name: 'Confess_booth', count: 13};
+  client.get('statuses/user_timeline', tweetTimeLine, function(error, tweets, response) {
+      if(!error){
+        console.log("==============================================")
+        console.log("Some Phyllis Dyller Quotes")
+        // tweets.forEach(function(tweets){
+        for (var i = 0; i < tweets.length; i++) {
+          console.log("_____________________________________________");
+          console.log(tweets[i].text);
+        }  
       }
-      console.log("==============================================")
-      console.log("Some Phyllis Dyller Quotes")
-      // console.log(JSON.stringify(tweets, null, 2));
-      for (var i = 0; i < tweets.length; i++) {
-        console.log("_____________________________________________");
-        console.log(tweets[i].text);
-      }    
   });
-}
+};
 
 //  make a 'spotify-this-song' command that shows the artist, song name, a preview link to a song from Spotify
 // and the album that the song is from.  If no song is provided it will play 'I saw the sign'
 function spotifySong(){
     spotify.search({ 
       type: 'track', 
-      query: 'All the Small Things' }, 
+      query: userInput,
+    limit: 1}, 
       function(err, data) {
       if (err) {
         return console.log('Error occurred: ' + err);
+      }else{
+          var data =  data.tracks.items;
+    for (var i = 0; i < data.length; i++) {
+        console.log(data[i].album.name);
+        console.log(data[i].artist);
+        console.log(data[i].name);
+        
+    }
       }
-
-    console.log(data); 
+      
+    // console.log(JSON.stringify(data.tracks.items, null, 2));
     });
 }
 
