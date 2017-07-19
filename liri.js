@@ -53,13 +53,12 @@ function twitter (){
   var tweetTimeLine = { screen_name: 'Confess_booth', count: 13};
   client.get('statuses/user_timeline', tweetTimeLine, function(error, tweets, response) {
       if(!error){
-        console.log("==============================================")
-        console.log("Some Phyllis Dyller Quotes")
-        // tweets.forEach(function(tweets){
-        for (var i = 0; i < tweets.length; i++) {
-          console.log("_____________________________________________");
-          console.log(tweets[i].text);
-        }  
+        console.log("==============================================");
+        console.log("Some Phyllis Dyller Quotes:");
+        tweets.forEach(function(tweets) {
+            console.log("_____________________________________________");
+            console.log(tweets.text);
+        });
       }
   });
 };
@@ -67,7 +66,7 @@ function twitter (){
 //  make a 'spotify-this-song' command that shows the artist, song name, a preview link to a song from Spotify
 // and the album that the song is from.  If no song is provided it will play 'I saw the sign'
 function spotifySong(){
-    if(userInput === true){
+    if(userInput != false){
         spotify.search({ 
             type: 'track', 
             query: userInput,
@@ -120,7 +119,7 @@ function spotifySong(){
 // country, language, plot, and actors. If the user doesn't type in a movie it will
 // return 'mr. nobody'
 function omdb(){
-if(userInput === true &&){
+if(userInput != false){
   request("http://www.omdbapi.com/?t=" + userInput + "&type=movie&apikey=40e9cece&", 
             function (error, response, body) {
     
@@ -152,5 +151,22 @@ if(userInput === true &&){
 // command do-what-it-says: using the fs package, liri reads the text inside the random.txt
 // file and it should spotify that song
 function doWhatItSays(){
+    fs.readFile("random.txt", "utf8", function(error, data) {
+
+  // If the code experiences any errors it will log the error to the console.
+  if (error) {
+    return console.log(error);
+  }
+
+  // We will then print the contents of data
+  console.log(data);
+
+  // Then split it by commas (to make it more readable)
+  var dataArr = data.split(",");
+
+  // We will then re-display the content as an array for later use.
+  console.log(dataArr);
+
+});
 
 }
